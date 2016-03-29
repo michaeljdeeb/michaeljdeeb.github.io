@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/><title></title><link rel="shortcut icon" href="/favicon.ico"/><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","UA-49663508-2","auto"),ga("send","pageview");</script><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div data-reactid=".1t7pyohj1mo" data-react-checksum="1999247000"><header data-reactid=".1t7pyohj1mo.0"><nav role="navigation" data-reactid=".1t7pyohj1mo.0.0"><div class="wrapper" data-reactid=".1t7pyohj1mo.0.0.0"><div class="brand js-brand" data-reactid=".1t7pyohj1mo.0.0.0.0"><a href="/" data-reactid=".1t7pyohj1mo.0.0.0.0.0">michaeljdeeb.com</a></div><button class="mobile-dropdown" data-reactid=".1t7pyohj1mo.0.0.0.1"><svg width="1792" height="1792" viewBox="0 0 1792 1792" data-reactid=".1t7pyohj1mo.0.0.0.1.0"><path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" data-reactid=".1t7pyohj1mo.0.0.0.1.0.0"></path></svg></button><ul data-reactid=".1t7pyohj1mo.0.0.0.2"><li data-reactid=".1t7pyohj1mo.0.0.0.2.$home"><a href="/" data-reactid=".1t7pyohj1mo.0.0.0.2.$home.0">home</a></li><li data-reactid=".1t7pyohj1mo.0.0.0.2.$blog"><a href="/blog/" data-reactid=".1t7pyohj1mo.0.0.0.2.$blog.0">blog</a></li><li data-reactid=".1t7pyohj1mo.0.0.0.2.$contact"><a href="/contact/" data-reactid=".1t7pyohj1mo.0.0.0.2.$contact.0">contact</a></li></ul></div></nav></header><div class="page" data-reactid=".1t7pyohj1mo.1"><div class="markdown" data-reactid=".1t7pyohj1mo.1.0"><noscript data-reactid=".1t7pyohj1mo.1.0.0"></noscript><header data-reactid=".1t7pyohj1mo.1.0.1"><h1 class="no-margin-padding" data-reactid=".1t7pyohj1mo.1.0.1.0">Form Validation and Email</h1><p class="meta" data-reactid=".1t7pyohj1mo.1.0.1.1">Thursday | May 08 2014 | 09:41 AM</p><hr data-reactid=".1t7pyohj1mo.1.0.1.2"/></header><div data-reactid=".1t7pyohj1mo.1.0.2"><p>When I first started working through this iteration of my website I didn’t want my email address plastered on every page in the footer like it had been in the past. I believe doing that is what caused all the spam email being sent to my school email address. However, I guess I liked working with <a href="../../blog/google-site-search/">input forms</a> so much that I decided to add a <a href="../../contact.html">contact form</a>.</p>
+<p>I knew I wanted a typical contact form, but without any dynamic content I couldn’t process the form directly on this domain. Luckily my search brought me to <a href="http://jekyllrb.com/docs/resources/">Jekyll’s Resources page</a> where I saw <a href="http://getsimpleform.com/">“Use Simple Form to integrate a simple contact form”</a>.</p>
+<p>Simple Form integrates well with <a href="https://akismet.com">Akismet</a> for spam prevention, but I haven’t opted to go that route (maybe in the future if the form gets abused). Due to this, I wanted my form validation to be thorough (catch possible abuse), but also offer a pleasing user experience (no captchas).</p>
+<p>I settled on two types of validation. The first one occurs when a form element loses focus (onblur) and just does some basic checks to determine if there is content in the field or not. The exception to this is email in which a regex <code>/^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/</code> is used to do the validation. After the value is checked I give the user some feedback by utilizing <a href="http://getbootstrap.com/css/#forms-control-validation">Bootstrap validation states</a>.</p>
+<p>The second validation occurs when the user presses submit and if everything looks good it will create a another form that is hidden and contains the Simple Form action and submit it. If there are errors (red fields), nothing will happen and it’s up to the user to fix them. If the message is short (yellow field) the form will display an alert to the user that their message looks a little short, but if submit is pressed a second time the form will go through.</p>
+<h3>HTML</h3>
+<p>This form requires <a href="http://getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> to display correctly.</p>
+<pre><code class="language-html">    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-horizontal"</span> <span class="hljs-attr">action</span>=<span class="hljs-string">"javascript:validateForm()"</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name-group"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-10 col-xs-offset-1 input-group"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-addon"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-user"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Name"</span> <span class="hljs-attr">onblur</span>=<span class="hljs-string">"javascript:validateInline(this.id, this.value)"</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email-group"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-10 col-xs-offset-1 input-group"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-addon"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-envelope"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Email"</span> <span class="hljs-attr">onblur</span>=<span class="hljs-string">"javascript:validateInline(this.id, this.value)"</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"subject-group"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-10 col-xs-offset-1 input-group"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-addon"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-comment"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"subject"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Subject"</span> <span class="hljs-attr">onblur</span>=<span class="hljs-string">"javascript:validateInline(this.id, this.value)"</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"message-group"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-10 col-xs-offset-1 input-group"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"input-group-addon"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"fa fa-quote-left"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"message"</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">"5"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Message"</span> <span class="hljs-attr">onblur</span>=<span class="hljs-string">"javascript:validateInline(this.id, this.value)"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">hidden</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"short-message-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-10 col-xs-offset-1 alert alert-warning alert-dismissable"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"button"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"close"</span> <span class="hljs-attr">data-dismiss</span>=<span class="hljs-string">"alert"</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">"true"</span>&gt;</span>&amp;times;<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+                Your message looks a little short. Press submit again if you'd like to send it anyways.
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-group"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"col-xs-offset-1"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn btn-default"</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+</code></pre>
+<h3>JS</h3>
+<p>As a note, <code>document.getElementById(&quot;&quot;).classList</code> doesn’t work in IE prior to version 10.</p>
+<pre><code class="language-js">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateInline</span>(<span class="hljs-params">id, input</span>) </span>{
+        <span class="hljs-keyword">if</span>(id == <span class="hljs-string">"name"</span> || id == <span class="hljs-string">"subject"</span> || id == <span class="hljs-string">"message"</span>)
+            <span class="hljs-keyword">if</span>(input.trim().length &gt; <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">if</span>(id == <span class="hljs-string">"message"</span> &amp;&amp; input.length &lt; <span class="hljs-number">30</span>) {
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-error"</span>);
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-success"</span>);
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.add(<span class="hljs-string">"has-warning"</span>);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-error"</span>);
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-warning"</span>);
+                    <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.add(<span class="hljs-string">"has-success"</span>);
+                }
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-success"</span>);
+                <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.remove(<span class="hljs-string">"has-warning"</span>);
+                <span class="hljs-built_in">document</span>.getElementById(id + <span class="hljs-string">"-group"</span>).classList.add(<span class="hljs-string">"has-error"</span>);
+            }
+
+        <span class="hljs-keyword">if</span>(id == <span class="hljs-string">"email"</span>) {
+            emailValidator = <span class="hljs-regexp">/^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/</span>;
+            <span class="hljs-keyword">if</span>(input.length &gt; <span class="hljs-number">0</span> &amp;&amp; input.match(emailValidator)) {
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"email-group"</span>).classList.remove(<span class="hljs-string">"has-error"</span>);
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"email-group"</span>).classList.add(<span class="hljs-string">"has-success"</span>);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"email-group"</span>).classList.remove(<span class="hljs-string">"has-success"</span>);
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"email-group"</span>).classList.add(<span class="hljs-string">"has-error"</span>);
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateForm</span>(<span class="hljs-params"></span>) </span>{
+        valid = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-keyword">var</span> name = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"name"</span>).value;
+        <span class="hljs-keyword">var</span> email = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"email"</span>).value;
+        <span class="hljs-keyword">var</span> subject = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"subject"</span>).value;
+        <span class="hljs-keyword">var</span> message = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"message"</span>).value;
+
+        <span class="hljs-keyword">if</span>(name.trim().length == <span class="hljs-number">0</span> || subject.trim().length == <span class="hljs-number">0</span> || message.trim().length == <span class="hljs-number">0</span>)
+            valid = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">if</span>(email.length &gt; <span class="hljs-number">0</span>) {
+            emailValidator = <span class="hljs-regexp">/^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/</span>;
+            <span class="hljs-keyword">if</span>(!email.match(emailValidator))
+                valid = <span class="hljs-literal">false</span>;
+        } <span class="hljs-keyword">else</span> {
+            valid = <span class="hljs-literal">false</span>;
+        }
+
+        <span class="hljs-keyword">if</span>(valid &amp;&amp; message.length &lt; <span class="hljs-number">30</span> &amp;&amp; <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"short-message-group"</span>).hidden)
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"short-message-group"</span>).hidden = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(valid) {
+            <span class="hljs-built_in">document</span>.body.innerHTML += <span class="hljs-string">'&lt;form id="simpleForm" action="http://getsimpleform.com/messages?form_api_token=SIMPLE_FORM_PUBLIC_API_TOKEN" method="post"&gt;'</span> +
+                                            <span class="hljs-string">'&lt;input type="hidden" name="Name" value="'</span>+name+<span class="hljs-string">'"&gt;'</span> +
+                                            <span class="hljs-string">'&lt;input type="hidden" name="Email" value="'</span>+email+<span class="hljs-string">'"&gt;'</span> +
+                                            <span class="hljs-string">'&lt;input type="hidden" name="Subject" value="'</span>+subject+<span class="hljs-string">'"&gt;'</span> +
+                                            <span class="hljs-string">'&lt;input type="hidden" name="Message" value="'</span>+message+<span class="hljs-string">'"&gt;'</span> +
+                                        <span class="hljs-string">'&lt;/form&gt;'</span>;
+            <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"simpleForm"</span>).submit();
+        }
+    }
+</code></pre>
+<h4>Criticisms</h4>
+<p>If I were to iterate on this implementation I’d probably write more advanced validation checks in JavaScript and use jQuery for the real form submission. I’d also write in a workaround for the IE compatibility issue.</p>
+<p>If you’d like to see it in action you can check it out on my <a href="/contact/">contact page</a> and if you have any suggestions on how to make it better or any other comments feel free to press that submit button!</p>
+</div><div data-reactid=".1t7pyohj1mo.1.0.3"><h6 data-reactid=".1t7pyohj1mo.1.0.3.0">READ THIS NEXT:</h6><h3 data-reactid=".1t7pyohj1mo.1.0.3.1"><a class="" href="/blog/github-atom-io-impression/?readNext=true" data-reactid=".1t7pyohj1mo.1.0.3.1.0">GitHub&#x27;s Atom.io Impression</a></h3><p data-reactid=".1t7pyohj1mo.1.0.3.2">This week’s post is on Atom [Editor]. I thought it would be appropriate because it is now open source. Atom is marketed as, “the text editor that the folks at GitHub have always wanted” and now it’s...</p><hr data-reactid=".1t7pyohj1mo.1.0.3.3"/></div></div><footer data-reactid=".1t7pyohj1mo.1.1"><p data-reactid=".1t7pyohj1mo.1.1.0"><a href="#" data-reactid=".1t7pyohj1mo.1.1.0.0"><span data-reactid=".1t7pyohj1mo.1.1.0.0.0">Back to top </span><svg class="one-em text" width="1792" height="1792" viewBox="0 0 1792 1792" data-reactid=".1t7pyohj1mo.1.1.0.0.1"><path d="M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z" data-reactid=".1t7pyohj1mo.1.1.0.0.1.0"></path></svg></a></p></footer></div></div></div><script src="/bundle.js"></script></body></html>

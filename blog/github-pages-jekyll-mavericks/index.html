@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="apple-touch-icon" href="/apple-touch-icon.png"/><title></title><link rel="shortcut icon" href="/favicon.ico"/><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","UA-49663508-2","auto"),ga("send","pageview");</script><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div data-reactid=".1p87xj3bf28" data-react-checksum="-532798388"><header data-reactid=".1p87xj3bf28.0"><nav role="navigation" data-reactid=".1p87xj3bf28.0.0"><div class="wrapper" data-reactid=".1p87xj3bf28.0.0.0"><div class="brand js-brand" data-reactid=".1p87xj3bf28.0.0.0.0"><a href="/" data-reactid=".1p87xj3bf28.0.0.0.0.0">michaeljdeeb.com</a></div><button class="mobile-dropdown" data-reactid=".1p87xj3bf28.0.0.0.1"><svg width="1792" height="1792" viewBox="0 0 1792 1792" data-reactid=".1p87xj3bf28.0.0.0.1.0"><path d="M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z" data-reactid=".1p87xj3bf28.0.0.0.1.0.0"></path></svg></button><ul data-reactid=".1p87xj3bf28.0.0.0.2"><li data-reactid=".1p87xj3bf28.0.0.0.2.$home"><a href="/" data-reactid=".1p87xj3bf28.0.0.0.2.$home.0">home</a></li><li data-reactid=".1p87xj3bf28.0.0.0.2.$blog"><a href="/blog/" data-reactid=".1p87xj3bf28.0.0.0.2.$blog.0">blog</a></li><li data-reactid=".1p87xj3bf28.0.0.0.2.$contact"><a href="/contact/" data-reactid=".1p87xj3bf28.0.0.0.2.$contact.0">contact</a></li></ul></div></nav></header><div class="page" data-reactid=".1p87xj3bf28.1"><div class="markdown" data-reactid=".1p87xj3bf28.1.0"><noscript data-reactid=".1p87xj3bf28.1.0.0"></noscript><header data-reactid=".1p87xj3bf28.1.0.1"><h1 class="no-margin-padding" data-reactid=".1p87xj3bf28.1.0.1.0">GitHub Pages, Jekyll, and Mavericks, Oh My!</h1><p class="meta" data-reactid=".1p87xj3bf28.1.0.1.1">Thursday | April 10 2014 | 09:41 AM</p><hr data-reactid=".1p87xj3bf28.1.0.1.2"/></header><div data-reactid=".1p87xj3bf28.1.0.2"><p>Using Jekyll within GitHub Pages is relatively straight forward, but due to some operating system (OS 10.9.2, Xcode 5.1) issues it became more difficult than necessary.</p>
+<p><strong>At the time of writing, if you are using OS X, do not use the version of ruby that comes with your computer.</strong></p>
+<p><a href="https://github.com/jekyll/jekyll/issues/2125">Issue #2125</a> is the problem and although the ARCHFLAGS work around worked to install Jekyll, it didn’t work when running <code>jekyll serve --watch</code>.</p>
+<h3>Install Xcode (Command Line Tools)</h3>
+<ol>
+<li>Download Xcode from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">Mac App Store</a></li>
+<li>Navigate to Xcode &gt; Preferences &gt; Downloads &gt; Command Line Tools and click the download arrow.
+(You can also start the installation via Terminal with <code>xcode-select --install</code> in Mavericks.)</li>
+</ol>
+<h3>Install Brew</h3>
+<p>Navigate to <a href="http://brew.sh">brew.sh</a> for more information or type:</p>
+<pre><code class="language-bash">	ruby <span class="hljs-_">-e</span> <span class="hljs-string">"<span class="hljs-variable">$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)</span>"</span>
+</code></pre>
+<h3>Install RVM &amp; Ruby</h3>
+<p>Navigate to <a href="https://rvm.io">rvm.io</a> for more information or type:</p>
+<pre><code class="language-bash">	\curl <span class="hljs-_">-s</span>SL https://get.rvm.io | bash <span class="hljs-_">-s</span> stable
+</code></pre>
+<p>At this point I had to quit Terminal and reopen it to get it to recognize the <code>rvm</code> command.</p>
+<p>After reopening Terminal you’ll want to run <code>rvm install 2.1.1</code> or you can attempt to find a newer version of Ruby by running <code>rvm list known</code>.</p>
+<p><strong>The install should’ve switched to this version of Ruby (2.1.1), but to make sure you aren’t using the native version of Ruby, type <code>rvm use 2.1.1</code> or verify you’re using the latest by typing <code>which ruby</code> and <code>ruby --version</code>.</strong></p>
+<h3>Finally, Install Jekyll</h3>
+<p>Navigate to <a href="http://jekyllrb.com">jekyllrb.com</a> for more information or type:</p>
+<pre><code class="language-bash">	gem install -V jekyll
+</code></pre>
+<p><strong>You can omit the <code>-V</code>, but your Terminal window will be blank for a lengthy amount of time.</strong></p>
+<h3>Configure your GitHub Pages Project</h3>
+<ol>
+<li>Pull your GitHub Pages project.
+<ul>
+<li>If you need to set one up check out the <a href="https://pages.github.com">GitHub Pages</a> site.</li>
+</ul>
+</li>
+<li>In Terminal run: <code>jekyll new /path/to/repository/project-name</code>
+<ul>
+<li>Note: <code>/path/to/repository/project-name</code> must be a path, you cannot run <code>jekyll new</code> from within the directory you wish to use.</li>
+<li>If Jekyll says <code>Conflict: /path/to/repository/project-name exists and is not empty.</code>, you’ll have to move the files in your project to a temporary location and rerun the command.</li>
+</ul>
+</li>
+<li>In Terminal change directory to your project: <code>cd /path/to/repository/project-name</code></li>
+<li>Then in Terminal run: <code>jekyll serve --watch --drafts</code>
+<ul>
+<li><code>--watch</code> updates your local copy every time you save a file.</li>
+<li><code>--drafts</code> shows drafts on your local copy</li>
+<li>Note: on OS X with the native version of Ruby this is where things fell apart and <em>really</em> stopped working.</li>
+<li>Note: to stop hosting a local copy you can press <code>ctrl-c</code></li>
+</ul>
+</li>
+<li>At this point if another service isn’t using port 4000, you can navigate to <a href="http://localhost:4000/">http://localhost:4000/</a> or <a href="http://0.0.0.0:4000">http://0.0.0.0:4000</a> after a couple minutes have passed.</li>
+<li>Jekyll’s documentation has great information about the <a href="http://jekyllrb.com/docs/structure/">Folder Structure</a> and you’ll probably want to reference their <a href="http://jekyllrb.com/docs/home/">documentation</a> from here on out.</li>
+</ol>
+<p>Good luck and hopefully this guide was of some help!</p>
+<p>Also, feel free to checkout the <a href="https://github.com/michaeljdeeb/michaeljdeeb.github.io">source</a> of this website.</p>
+</div><div data-reactid=".1p87xj3bf28.1.0.3"><h6 data-reactid=".1p87xj3bf28.1.0.3.0">READ THIS NEXT:</h6><h3 data-reactid=".1p87xj3bf28.1.0.3.1"><a class="" href="/blog/using-a-custom-domain-with-github-pages/?readNext=true" data-reactid=".1p87xj3bf28.1.0.3.1.0">Using a Custom Domain with GitHub Pages</a></h3><p data-reactid=".1p87xj3bf28.1.0.3.2">Update [05/13/2014]: Using this method may cause slow load times
+As you may have noticed, as of last week this site uses a custom domain, but the content is being stored by GitHub. I seem to be...</p><hr data-reactid=".1p87xj3bf28.1.0.3.3"/></div></div><footer data-reactid=".1p87xj3bf28.1.1"><p data-reactid=".1p87xj3bf28.1.1.0"><a href="#" data-reactid=".1p87xj3bf28.1.1.0.0"><span data-reactid=".1p87xj3bf28.1.1.0.0.0">Back to top </span><svg class="one-em text" width="1792" height="1792" viewBox="0 0 1792 1792" data-reactid=".1p87xj3bf28.1.1.0.0.1"><path d="M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z" data-reactid=".1p87xj3bf28.1.1.0.0.1.0"></path></svg></a></p></footer></div></div></div><script src="/bundle.js"></script></body></html>
